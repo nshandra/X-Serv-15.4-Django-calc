@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-# NAZAR SHANDRA
 
 import sys
 
@@ -34,9 +33,7 @@ def div(operand1, operand2):
         return("Division by zero error.")
 
 
-functions = {"add": add, "sub": sub, "mul": mul, "div": div}
-
-operators = {"add": "+", "sub": "-", "mul": "*", "div": "/"}
+functions = {"+": add, "-": sub, "*": mul, "/": div}
 
 
 def to_float(input):
@@ -52,9 +49,9 @@ def calculator(function, operand1, operand2):
 
     if function in functions:
         result = functions[function](foperand1, foperand2)
-        return(operand1 + operators[function] + operand2 + "=" + result)
+        return(operand1 + function + operand2 + "=" + result)
     else:
-        return("wrong function. Usage: add, sub, mul, div.")
+        return("wrong function.")
 
 
 if __name__ == '__main__':
@@ -67,6 +64,6 @@ if __name__ == '__main__':
     if function in functions:
         result = functions[function](operand1, operand2)
     else:
-        sys.exit("wrong function. Usage: add, sub, mul, div.")
+        sys.exit("wrong function.")
 
-    print(operand1, operators[function], operand2, '=', result)
+    print(operand1, function, operand2, '=', result)

@@ -2,10 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'project.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^/*', 'calc.views.calc_app')
+    url(r'^(\d+|\d+\.\d*)([-\+*/])(\d+|\d+.\d*)$', 'calc.views.calc_app'),
+    url(r'^.*$', 'calc.views.not_found')
 )

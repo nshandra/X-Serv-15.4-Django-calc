@@ -1,26 +1,23 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 import calculadora
 
-# Create your views here.
 
-def calc_app(request):
-    usage = "Usage: hostname:port/operand1/function/operand2"
+def not_found(request):
+    return HttpResponseNotFound("<html><body><h1>X-Serv-15.4-Django-calc</h1>"
+                                "Usage: hostname:port/[operand1][+, -, *, /]"
+                                "[operand2]</body></html>")
+
+
+def calc_app(request, operand1, function, operand2):
+    usage = "Usage: hostname:port/[operand1][+, -, *, /][operand2]"
     print(request)
-    parsedRequest = request.path.split('/')[1:]
-    print(parsedRequest)
-
-    if '' in parsedRequest:
+    try:
+        output = calculadora.calculator(function, operand1, operand2)
+    except IndexError:
         output = usage
-    else:
-        try:
-            output = calculadora.calculator(parsedRequest[1],
-                                            parsedRequest[0],
-                                            parsedRequest[2])
-        except IndexError:
-            output = usage
     print(output)
 
-    return HttpResponse ("<html><head><meta charset='utf-8'>"
-                         "<h1>Calculadora webApp</h1></head>"
-                         "<body><p>" + str(output) + "</p></body></html>")
+    return HttpResponse("<html><head><meta charset='utf-8'>"
+                        "<h1>X-Serv-15.4-Django-calc</h1></head>"
+                        "<body><p>" + str(output) + "</p></body></html>")
